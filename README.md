@@ -27,9 +27,9 @@ DATABASES = {
 }
 ```
 
-4. Создайте БД с именем, указанным в NAME (netology_smart_home):
+4. Создайте БД с именем, указанным в NAME (netology_stocks_products):
 ```bash
-createdb -U postgres netology_smart_home
+createdb -U postgres netology_stocks_products
 ```
 
 5. Осуществите команды для создания миграций приложения с БД:
