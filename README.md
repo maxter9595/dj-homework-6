@@ -123,7 +123,7 @@ Content-Type: application/json
 }
 ```
 
-- Обновляем записи на складе
+- Обновление записи на складе
 ```http
 PATCH {{baseUrl}}/stocks/1/
 Content-Type: application/json
