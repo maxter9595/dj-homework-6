@@ -48,7 +48,7 @@ python manage.py runserver
 
 - Примеры реализации запросов представлены в файле ``requests-examples.http``
 
-- Создание продукта/продуктов:
+- Создание продукта/продуктов
 ```http
 @baseUrl = http://localhost:8000/api
 
@@ -73,13 +73,13 @@ Content-Type: application/json
 }
 ```
 
-- Получение продуктов:
+- Получение продуктов
 ```http
 GET {{baseUrl}}/products/
 Content-Type: application/json
 ```
 
-- Поиск продуктов по названию и описанию:
+- Поиск продуктов по названию и описанию
 ```http
 GET {{baseUrl}}/products/?search=помидор
 Content-Type: application/json
