@@ -32,7 +32,7 @@ Content-Type: application/json
 ###
 
 # поиск продуктов по названию и описанию
-GET {{baseUrl}}/products/?search=помидор
+GET {{baseUrl}}/products/?search=огур
 Content-Type: application/json
 
 ###
@@ -97,7 +97,7 @@ Content-Type: application/json
 ###
 
 # поиск складов, где есть определенный продукт (по ID продукта)
-GET {{baseUrl}}/stocks/?products=3
+GET {{baseUrl}}/stocks/?search=3
 Content-Type: application/json
 
 ###
