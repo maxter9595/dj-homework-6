@@ -5,7 +5,7 @@ from logistic.models import Product, Stock, StockProduct
 
 class ProductSerializer(serializers.ModelSerializer):
     """
-    Сериализатор модели Product
+    Сериализатор модели для продукта
     """
     class Meta:
         model = Product
@@ -14,37 +14,45 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class ProductPositionSerializer(serializers.ModelSerializer):
     """
-    Сериализатор модели StockProduct
+    Сериализатор для позиции продукта на складе
     """
     class Meta:
         model = StockProduct
-        fields = '__all__'
+        fields = [
+            'product',
+            'quantity',
+            'price'
+        ]
 
 
 class StockSerializer(serializers.ModelSerializer):
     """
-    Сериализатор модели Stock
+    Сериализатор для склада
     """
-    class Meta:
-        model = Stock
-        fields = ['id', 'address', 'positions']
-
     positions = ProductPositionSerializer(
         many=True
     )
 
+    class Meta:
+        model = Stock
+        fields = '__all__'
+
     def create(self, validated_data):
         """
-        Используется для создания нового экземпляра модели Stock
+        Используется для модификации метода create
+        при работе с моделью Stock (основная логика +
+        заполнение данных модели StockProduct)
         """
         positions_data = validated_data.pop(
             'positions'
         )
 
-        stock = Stock.objects.create(
-            **validated_data
+        # Добавляем склад в таблицу со складами (основная логика)
+        stock = super().create(
+            validated_data
         )
 
+        # Добавление товаров в связующую таблицу (дополнительная логика)
         for position_data in positions_data:
             StockProduct.objects.create(
                 stock=stock,
@@ -55,38 +63,31 @@ class StockSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """
-        Используется для обновления существующего экземпляра модели Stock
+        Используется для модификации метода update
+        при работе с моделью Stock (основная логика +
+        обновление данных модели StockProduct)
         """
-        positions = instance.positions.all()
-        positions = list(positions)
-
         positions_data = validated_data.pop(
             'positions'
         )
 
-        instance.address = validated_data.get(
-            'address',
-            instance.address
+        # Обновление склада в таблице со складами (основная логика)
+        stock = super().update(
+            instance,
+            validated_data
         )
-        instance.save()
 
+        # Обновление данных по товарам в связующей таблице (дополнительная логика)
         for position_data in positions_data:
-            position = positions.pop(0)
-
-            position.product = position_data.get(
-                'product',
-                position.product
+            obj, created = StockProduct.objects.update_or_create(
+                stock=stock,
+                product=position_data.get('product'),
+                defaults={
+                    'stock': stock,
+                    'product': position_data.get('product'),
+                    'quantity': position_data.get('quantity'),
+                    'price': position_data.get('price')
+                }
             )
 
-            position.quantity = position_data.get(
-                'quantity',
-                position.quantity
-            )
-
-            position.price = position_data.get(
-                'price',
-                position.price
-            )
-            position.save()
-
-        return instance
+        return stock

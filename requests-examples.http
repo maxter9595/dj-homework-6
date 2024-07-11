@@ -1,44 +1,44 @@
 # примеры API-запросов
 
-@baseUrl = http://localhost:8000/api/v1
-
-# создание продукта/продуктов
-POST {{baseUrl}}/products/
+# создание продукта
+POST http://localhost:8000/api/v1/products/
 Content-Type: application/json
 
 {
-  "products": [
-    {
-      "title": "Помидор",
-      "description": "Самые сочные и ароматные помидорки"	
-    },
-    {
-      "title": "Огурец",
-      "description": "Лучшие огурцы на рынке"
-    },
-    {
-      "title": "Морковка",
-      "description": "Лучшие морковки на рынке"
-    }
-  ]
+  "title": "Помидор",
+  "description": "Лучшие помидоры на рынке"
+}
+
+###
+
+POST http://localhost:8000/api/v1/products/
+Content-Type: application/json
+
+{
+  "title": "Морковка",
+  "description": "Лучшая в мире морковка"
+}
+
+###
+
+POST http://localhost:8000/api/v1/products/
+Content-Type: application/json
+
+{
+  "title": "Огурец",
+  "description": "Лучший в мире огурец"
 }
 
 ###
 
 # получение продуктов
-GET {{baseUrl}}/products/
-Content-Type: application/json
-
-###
-
-# поиск продуктов по названию и описанию
-GET {{baseUrl}}/products/?search=огур
+GET http://localhost:8000/api/v1/products/
 Content-Type: application/json
 
 ###
 
 # обновление продукта
-PATCH {{baseUrl}}/products/1/
+PATCH http://localhost:8000/api/v1/products/1/
 Content-Type: application/json
 
 {
@@ -48,13 +48,19 @@ Content-Type: application/json
 ###
 
 # удаление продукта
-DELETE {{baseUrl}}/products/1/
+DELETE http://localhost:8000/api/v1/products/1/
+Content-Type: application/json
+
+###
+
+# поиск продуктов по названию и описанию
+GET http://localhost:8000/api/v1/products/?search=Лучшая
 Content-Type: application/json
 
 ###
 
 # создание склада
-POST {{baseUrl}}/stocks/
+POST http://localhost:8000/api/v1/stocks/
 Content-Type: application/json
 
 {
@@ -76,7 +82,7 @@ Content-Type: application/json
 ###
 
 # обновляем записи на складе
-PATCH {{baseUrl}}/stocks/1/
+PATCH http://localhost:8000/api/v1/stocks/1/
 Content-Type: application/json
 
 {
@@ -97,11 +103,11 @@ Content-Type: application/json
 ###
 
 # поиск складов, где есть определенный продукт (по ID продукта)
-GET {{baseUrl}}/stocks/?search=3
+GET http://localhost:8000/api/v1/stocks/?products=3
 Content-Type: application/json
 
 ###
 
 # поиск складов, где есть определенный продукт (по названию и описанию)
-GET {{baseUrl}}/stocks/?search=огур
+GET http://localhost:8000/api/v1/stocks/?search=гуре
 Content-Type: application/json

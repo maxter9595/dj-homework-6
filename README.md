@@ -46,48 +46,32 @@ python manage.py runserver
 
 # Реализация запросов (на примере REST Client из VS Code)
 
+
 - Примеры реализации запросов представлены в файле ``requests-examples.http``
 
-- Создание продукта/продуктов
-```http
-@baseUrl = http://localhost:8000/api
 
-POST {{baseUrl}}/products/
+- Создание продукта:
+```http
+POST http://localhost:8000/api/v1/products/
 Content-Type: application/json
 
 {
-  "products": [
-    {
-      "title": "Помидор",
-      "description": "Самые сочные и ароматные помидорки"	
-    },
-    {
-      "title": "Огурец",
-      "description": "Лучшие огурцы на рынке"
-    },
-    {
-      "title": "Морковка",
-      "description": "Лучшие морковки на рынке"
-    }
-  ]
+  "title": "Помидор",
+  "description": "Лучшие помидоры на рынке"
 }
 ```
 
-- Получение продуктов
+
+- Получение продуктов:
 ```http
-GET {{baseUrl}}/products/
+GET http://localhost:8000/api/v1/products/
 Content-Type: application/json
 ```
 
-- Поиск продуктов по названию и описанию
-```http
-GET {{baseUrl}}/products/?search=помидор
-Content-Type: application/json
-```
 
-- Обновление продукта
+- Обновление продукта:
 ```http
-PATCH {{baseUrl}}/products/1/
+PATCH http://localhost:8000/api/v1/products/1/
 Content-Type: application/json
 
 {
@@ -95,15 +79,24 @@ Content-Type: application/json
 }
 ```
 
-- Удаление продукта
+
+- Удаление продукта:
 ```http
-DELETE {{baseUrl}}/products/1/
+DELETE http://localhost:8000/api/v1/products/1/
 Content-Type: application/json
 ```
 
-- Создание склада
+
+- Поиск продуктов по названию и описанию:
 ```http
-POST {{baseUrl}}/stocks/
+GET http://localhost:8000/api/v1/products/?search=Лучшая
+Content-Type: application/json
+```
+
+
+- Создание склада:
+```http
+POST http://localhost:8000/api/v1/stocks/
 Content-Type: application/json
 
 {
@@ -123,9 +116,10 @@ Content-Type: application/json
 }
 ```
 
-- Обновление записи на складе
+
+- Обновление записей на складе:
 ```http
-PATCH {{baseUrl}}/stocks/1/
+PATCH http://localhost:8000/api/v1/stocks/1/
 Content-Type: application/json
 
 {
@@ -144,17 +138,20 @@ Content-Type: application/json
 }
 ```
 
-- Поиск складов, где есть определенный продукт (по ID продукта)
+
+- Поиск складов, где есть определенный продукт (по ID продукта):
 ```http
-GET {{baseUrl}}/stocks/?products=3
+GET http://localhost:8000/api/v1/stocks/?products=3
 Content-Type: application/json
 ```
 
-- Поиск складов, где есть определенный продукт (по названию и описанию)
+
+- Поиск складов, где есть определенный продукт (по названию и описанию):
 ```http
-GET {{baseUrl}}/stocks/?search=огур
+GET http://localhost:8000/api/v1/stocks/?search=гуре
 Content-Type: application/json
 ```
+
 
 # Текст задания ("Склады и товары")
 
